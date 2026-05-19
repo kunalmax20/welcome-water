@@ -1,0 +1,145 @@
+{
+  "products": [
+    {
+      "id": "P001",
+      "name": "Blue Bottle Caps",
+      "category": "Raw Material",
+      "stock": 565,
+      "unit": "Bags",
+      "supplier": "Ravi Polymers",
+      "minStock": 500
+    },
+    {
+      "id": "P002",
+      "name": "Preforms (28mm)",
+      "category": "Raw Material",
+      "stock": 1840,
+      "unit": "Boxes",
+      "supplier": "Krishna Plastics",
+      "minStock": 1000
+    },
+    {
+      "id": "P003",
+      "name": "Preforms (38mm)",
+      "category": "Raw Material",
+      "stock": 320,
+      "unit": "Boxes",
+      "supplier": "Krishna Plastics",
+      "minStock": 800
+    },
+    {
+      "id": "P004",
+      "name": "White Bottle Caps",
+      "category": "Raw Material",
+      "stock": 750,
+      "unit": "Bags",
+      "supplier": "Ravi Polymers",
+      "minStock": 500
+    },
+    {
+      "id": "P005",
+      "name": "1L Water Bottles",
+      "category": "Finished Goods",
+      "stock": 4200,
+      "unit": "Boxes",
+      "supplier": "Internal",
+      "minStock": 2000
+    },
+    {
+      "id": "P006",
+      "name": "Shrink Labels",
+      "category": "Raw Material",
+      "stock": 900,
+      "unit": "Rolls",
+      "supplier": "PrintStar Ltd",
+      "minStock": 400
+    }
+  ],
+  "activityLogs": [
+    {
+      "id": "L007",
+      "product": "Blue Bottle Caps",
+      "productId": "P001",
+      "supplier": "delhi",
+      "qty": -200,
+      "type": "OUTGOING",
+      "invoice": "",
+      "date": "2026-05-19",
+      "timestamp": "2026-05-19T20:44:24.959Z"
+    },
+    {
+      "id": "L006",
+      "product": "Blue Bottle Caps",
+      "productId": "P001",
+      "supplier": "kunalno",
+      "qty": 500,
+      "type": "INCOMING",
+      "invoice": "",
+      "date": "2026-05-19",
+      "timestamp": "2026-05-19T20:43:57.546Z"
+    },
+    {
+      "id": "L001",
+      "product": "1L Water Bottles",
+      "productId": "P005",
+      "supplier": "Internal",
+      "qty": 500,
+      "type": "INCOMING",
+      "invoice": "INV-2025-0081",
+      "date": "2025-05-19",
+      "timestamp": "2025-05-19T10:00:00.000Z"
+    },
+    {
+      "id": "L002",
+      "product": "Blue Bottle Caps",
+      "productId": "P001",
+      "supplier": "Ravi Polymers",
+      "qty": -200,
+      "type": "OUTGOING",
+      "invoice": "DSP-2025-0044",
+      "date": "2025-05-19",
+      "timestamp": "2025-05-19T09:00:00.000Z"
+    },
+    {
+      "id": "L003",
+      "product": "Preforms (28mm)",
+      "productId": "P002",
+      "supplier": "Krishna Plastics",
+      "qty": 840,
+      "type": "INCOMING",
+      "invoice": "INV-2025-0080",
+      "date": "2025-05-18",
+      "timestamp": "2025-05-18T14:00:00.000Z"
+    },
+    {
+      "id": "L004",
+      "product": "Shrink Labels",
+      "productId": "P006",
+      "supplier": "PrintStar Ltd",
+      "qty": 300,
+      "type": "INCOMING",
+      "invoice": "INV-2025-0079",
+      "date": "2025-05-18",
+      "timestamp": "2025-05-18T11:00:00.000Z"
+    },
+    {
+      "id": "L005",
+      "product": "Preforms (38mm)",
+      "productId": "P003",
+      "supplier": "Krishna Plastics",
+      "qty": -180,
+      "type": "OUTGOING",
+      "invoice": "DSP-2025-0043",
+      "date": "2025-05-17",
+      "timestamp": "2025-05-17T08:00:00.000Z"
+    }
+  ],
+  "admins": [
+    {
+      "id": "A001",
+      "username": "admin",
+      "password": "welcome@2025",
+      "role": "superadmin"
+    }
+  ]
+}
