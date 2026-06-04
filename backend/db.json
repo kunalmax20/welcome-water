@@ -22,7 +22,7 @@
       "id": "P003",
       "name": "Preforms (38mm)",
       "category": "Raw Material",
-      "stock": 320,
+      "stock": 620,
       "unit": "Boxes",
       "supplier": "Krishna Plastics",
       "minStock": 800
@@ -56,6 +56,28 @@
     }
   ],
   "activityLogs": [
+    {
+      "id": "L009",
+      "product": "Preforms (38mm)",
+      "productId": "P003",
+      "supplier": "padosi",
+      "qty": -200,
+      "type": "OUTGOING",
+      "invoice": "",
+      "date": "2026-06-03",
+      "timestamp": "2026-06-03T13:47:59.007Z"
+    },
+    {
+      "id": "L008",
+      "product": "Preforms (38mm)",
+      "productId": "P003",
+      "supplier": "madhav ltd",
+      "qty": 500,
+      "type": "INCOMING",
+      "invoice": "",
+      "date": "2026-06-03",
+      "timestamp": "2026-06-03T13:47:33.527Z"
+    },
     {
       "id": "L007",
       "product": "Blue Bottle Caps",
