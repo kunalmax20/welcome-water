@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors"); // <-- 1. Make sure this line is here
+const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 
@@ -8,25 +8,47 @@ const PORT = process.env.PORT || 5000; // Accept dynamic port from Render
 const DB_PATH = path.join(__dirname, "db.json");
 
 // ── Middleware ──────────────────────────────────────────────────────────────
-// CRITICAL: app.use(cors()) MUST come BEFORE any route definitions like app.get()
-app.use(
-  cors({
-    origin: "https://welcome-water-inventory.onrender.com", // Explicitly allow your frontend
-    methods: ["GET", "POST"],
-    credentials: true,
-  }),
-);
-
+// Opened up completely to resolve any trailing CORS origin mismatch errors instantly
+app.use(cors());
 app.use(express.json());
-
-// ── DB Helpers ──────────────────────────────────────────────────────────────
-// ... (Your functions readDB, writeDB, generateId continue below exactly the same)
 
 // ── DB Helpers ──────────────────────────────────────────────────────────────
 function readDB() {
   const raw = fs.readFileSync(DB_PATH, "utf-8");
   return JSON.parse(raw);
 }
+
+// Global safe initializer to prevent crash if db.json is blank on Render
+function checkDBInitialization() {
+  try {
+    if (!fs.existsSync(DB_PATH)) {
+      fs.writeFileSync(
+        DB_PATH,
+        JSON.stringify({ products: [], activityLogs: [] }, null, 2),
+        "utf-8",
+      );
+    } else {
+      const data = readDB();
+      if (!data.products || !data.activityLogs) {
+        fs.writeFileSync(
+          DB_PATH,
+          JSON.stringify(
+            {
+              products: data.products || [],
+              activityLogs: data.activityLogs || [],
+            },
+            null,
+            2,
+          ),
+          "utf-8",
+        );
+      }
+    }
+  } catch (e) {
+    console.error("DB Init Warning:", e);
+  }
+}
+checkDBInitialization();
 
 function writeDB(data) {
   fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), "utf-8");
@@ -41,16 +63,13 @@ function generateId(prefix, list) {
 }
 
 // ── GET /api/products ───────────────────────────────────────────────────────
-// Returns the full database layout for the dashboard interface
+// Restored structure to align perfectly with: .then(r => r.data.data)
 app.get("/api/products", (req, res) => {
   try {
     const db = readDB();
-
-    // Return BOTH arrays inside the object so your dashboard can map them safely!
     res.json({
       success: true,
-      products: db.products,
-      activityLogs: db.activityLogs,
+      data: db.products || [],
     });
   } catch (err) {
     res.status(500).json({ success: false, error: "Failed to read database." });
@@ -58,7 +77,6 @@ app.get("/api/products", (req, res) => {
 });
 
 // ── POST /api/products ──────────────────────────────────────────────────────
-// Register a new product
 app.post("/api/products", (req, res) => {
   try {
     const { name, category, stock, unit, supplier, minStock } = req.body;
@@ -104,7 +122,6 @@ app.post("/api/products", (req, res) => {
 });
 
 // ── POST /api/products/incoming ─────────────────────────────────────────────
-// Add incoming stock for an existing product
 app.post("/api/products/incoming", (req, res) => {
   try {
     const { productId, qty, supplier, invoice, date } = req.body;
@@ -156,7 +173,6 @@ app.post("/api/products/incoming", (req, res) => {
 });
 
 // ── POST /api/products/outgoing ─────────────────────────────────────────────
-// Dispatch (subtract) stock for an existing product
 app.post("/api/products/outgoing", (req, res) => {
   try {
     const { productId, qty, destination, invoice, date } = req.body;
@@ -214,12 +230,15 @@ app.post("/api/products/outgoing", (req, res) => {
 });
 
 // ── GET /api/logs ───────────────────────────────────────────────────────────
-// Returns paginated activity logs
+// Aligned payload signature to return data array to match: getLogs = () => ...then(r => r.data.data)
 app.get("/api/logs", (req, res) => {
   try {
     const db = readDB();
     const limit = parseInt(req.query.limit) || 50;
-    res.json({ success: true, data: db.activityLogs.slice(0, limit) });
+    res.json({
+      success: true,
+      data: db.activityLogs.slice(0, limit),
+    });
   } catch (err) {
     res.status(500).json({ success: false, error: "Failed to read logs." });
   }
@@ -236,5 +255,5 @@ app.get("/api/health", (req, res) => {
 
 // ── Start ───────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`✅  Welcome Water backend running at http://localhost:${PORT}`);
+  console.log(`✅  Welcome Water backend running at port ${PORT}`);
 });
